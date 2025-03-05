@@ -2,49 +2,86 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-
+#include <string>
 
 using namespace std;
 
-// Function to display the fortune
-void getFortune() {
-    vector<string> fortunes = {
-        "A pleasant surprise is coming your way.",
-        "Someone close to you is keeping a secret.",
-        "Now is the time to take risks, success is near!",
-        "You will find unexpected joy in simple things.",
-        "Beware of a situation that looks too good to be true.",
-        "Your hard work will soon pay off!",
-        "A new opportunity is on the horizon.",
-        "Love is in the air, keep an open heart.",
-        "A big change is coming, embrace it!"
+// Function to display the fortune based on the category
+void getFortune(const string& category) {
+    vector<string> positiveFortunes = {
+        "You will find happiness in the near future.",
+        "Success is within your reach.",
+        "Someone close to you will bring good news.",
+        "Your hard work will soon pay off."
     };
-//Generate a random number to pick a fortune
-int randomIndex=rand()%fortunes.size();
 
- // Display the selected fortune
-cout<<"\nYour fortune: "<<fortunes[randomIndex]<<endl;
+    vector<string> neutralFortunes = {
+        "An opportunity will arise that you must seize.",
+        "A surprise awaits you in your career.",
+        "You will face challenges, but they will make you stronger.",
+        "Take a step back and think before acting."
+    };
 
+    vector<string> negativeFortunes = {
+        "Beware of unexpected changes.",
+        "A difficult situation is coming your way.",
+        "Someone may try to deceive you.",
+        "You will face disappointment, but stay strong."
+    };
+
+    vector<string>* fortuneList = nullptr;
+
+    // Choose the fortune list based on category
+    if (category == "positive") {
+        fortuneList = &positiveFortunes;
+    } else if (category == "neutral") {
+        fortuneList = &neutralFortunes;
+    } else if (category == "negative") {
+        fortuneList = &negativeFortunes;
+    } else {
+        cout << "Unknown category. Showing neutral fortune.\n";
+        fortuneList = &neutralFortunes;
+    }
+
+    // Get random index
+    int index = rand() % fortuneList->size();
+    cout << "Your fortune: " << fortuneList->at(index) << endl;
 }
-int main(){
+
+int main() {
+    // Seed the random number generator
+    srand(time(0));
+
     string name;
+    string question;
+    string category;
+
     cout << "Welcome to the Fortune Teller program!\n";
     cout << "What's your name? ";
-    cin >> name;
-  
-    srand(time(0)); // Seed the random number generator with the current time
-    string question;
-    
-    cout << "Ask a question, and I will tell you your fortune." << endl;
-    while(true){
-        cout<<"\nEnter your question (or type 'exit' to quit): ";
-        getline(cin,question);
+    cin >> name; // Taking user's name
 
-        if(question=="exit"){
-            cout<<"Goodbye!Have a great day!"<<endl;
-            break;
-        }
-        getFortune();
+    cout << "Hello, " << name << "! Ask a question for your fortune.\n";
+    cin.ignore(); // To clear the newline character left by previous input
+    getline(cin, question);  // User inputs a question
+
+    cout << "What kind of fortune would you like? (positive/neutral/negative): ";
+    cin >> category; // Taking category input
+
+    cout << "Thinking...\n";
+    
+    // Get a random fortune based on the category
+    getFortune(category);
+
+    // Ask the user if they want to ask another question
+    char again;
+    cout << "Would you like to ask another question? (y/n): ";
+    cin >> again;
+
+    if (again == 'y' || again == 'Y') {
+        main(); // Restart the program
+    } else {
+        cout << "Thank you for using the Fortune Teller program! Goodbye, " << name << "!\n";
     }
+
     return 0;
 }
