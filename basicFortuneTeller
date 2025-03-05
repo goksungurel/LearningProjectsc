@@ -1,0 +1,50 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+
+
+using namespace std;
+
+// Function to display the fortune
+void getFortune() {
+    vector<string> fortunes = {
+        "A pleasant surprise is coming your way.",
+        "Someone close to you is keeping a secret.",
+        "Now is the time to take risks, success is near!",
+        "You will find unexpected joy in simple things.",
+        "Beware of a situation that looks too good to be true.",
+        "Your hard work will soon pay off!",
+        "A new opportunity is on the horizon.",
+        "Love is in the air, keep an open heart.",
+        "A big change is coming, embrace it!"
+    };
+//Generate a random number to pick a fortune
+int randomIndex=rand()%fortunes.size();
+
+ // Display the selected fortune
+cout<<"\nYour fortune: "<<fortunes[randomIndex]<<endl;
+
+}
+int main(){
+    string name;
+    cout << "Welcome to the Fortune Teller program!\n";
+    cout << "What's your name? ";
+    cin >> name;
+  
+    srand(time(0)); // Seed the random number generator with the current time
+    string question;
+    
+    cout << "Ask a question, and I will tell you your fortune." << endl;
+    while(true){
+        cout<<"\nEnter your question (or type 'exit' to quit): ";
+        getline(cin,question);
+
+        if(question=="exit"){
+            cout<<"Goodbye!Have a great day!"<<endl;
+            break;
+        }
+        getFortune();
+    }
+    return 0;
+}
