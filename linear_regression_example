@@ -1,0 +1,26 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Veri
+X = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)  # saatler
+y = np.array([50, 60, 70, 80, 90])            # notlar
+
+# Modeli oluştur ve eğit
+model = LinearRegression()
+model.fit(X, y)
+
+# Sonuçlar
+print("Eğim (w):", model.coef_[0])
+print("Bias (b):", model.intercept_)
+
+# Tahmin
+y_pred = model.predict(X)
+
+# Görselleştirme
+plt.scatter(X, y, color="green", label="Gerçek veri")
+plt.plot(X, y_pred, color="red", label="Tahmin (regresyon doğrusu)")
+plt.xlabel("Çalışma saati")
+plt.ylabel("Sınav notu")
+plt.legend()
+plt.show()
